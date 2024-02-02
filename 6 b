@@ -1,0 +1,35 @@
+
+class FormulaError(Exception):
+    pass
+
+def calculate(formula):
+    try:
+        elements = formula.split()
+        if len(elements) != 3:
+            raise FormulaError("Invalid formula. Please provide a formula with 3 elements.")
+
+        operand1 = float(elements[0])
+        operand2 = float(elements[2])
+
+        operator = elements[1]
+        if operator not in ('+', '-'):
+            raise FormulaError("Invalid operator. Please use + or -.")
+
+        result = operand1 + operand2 if operator == '+' else operand1 - operand2
+
+        print("Result:", result)
+
+    except ValueError:
+        raise FormulaError("Invalid input. Please provide valid numeric values.")
+
+while True:
+    user_input = input("Enter a formula (or 'quit' to exit): ")
+
+    if user_input.lower() == 'quit':
+        break
+
+    try:
+        calculate(user_input)
+
+    except FormulaError as e:
+        print(f"Error: {e}")
